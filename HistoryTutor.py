@@ -11,6 +11,8 @@ user = st.text_input('Ask a question')
 
 client = Groq(api_key=API)
 
+st.title('How Can History Professor Helps You??')
+
 if user:
     response = client.chat.completions.create(
         model="llama-3.1-8b-instant",
