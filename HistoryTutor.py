@@ -5,15 +5,13 @@ import os
 
 load_dotenv()
 
-API = os.getenv("API_KEY")
+st.title('How Can History Professor Helps You??')
 
 user = st.text_input('Ask a question')
 
-client = Groq(api_key=API)
-
-st.title('How Can History Professor Helps You??')
-
-if user:
+def create_model(user):
+    API = os.getenv("API_KEY")
+    client = Groq(api_key=API)
     response = client.chat.completions.create(
         model="llama-3.1-8b-instant",
         messages=[
@@ -21,7 +19,12 @@ if user:
             {"role": "user", "content": user}
         ],
         temperature=0.7)
-    st.text(response.choices[0].message.content)
+    return response.choices[0].message.content
+
+if user:
+    result = create_model(user)
+    st.text(result)
+    
 
 
 # import google.generativeai as genai
